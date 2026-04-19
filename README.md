@@ -1,3 +1,8 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
 # IoT Botnet Attack Detection
 
 **Team Members:** Jinhong Lin, Elton Chang, Shiwei Jiang
@@ -7,6 +12,30 @@
 As Internet of Things (IoT) devices proliferate in homes, offices, and critical infrastructure, they have become prime targets for malware and botnet attacks. The Mirai and Gafgyt botnets have demonstrated the devastating potential of compromised IoT devices—turning ordinary cameras, routers, and smart home devices into powerful attack vectors for distributed denial-of-service (DDoS) attacks.
 
 The challenge lies in **accurately distinguishing between benign IoT traffic and malicious botnet activity in real-time**, enabling network administrators to rapidly detect and isolate compromised devices before they can be weaponized. This repository contains code, analysis, and experiments for developing and validating machine learning and deep learning models to detect and classify IoT botnet attacks.
+
+## Project Structure and Evolution (EDA -> Pipeline)
+
+This course project is best understood as a **two-stage workflow**:
+
+1. **Stage 1: EDA / dataset understanding** (`../IoT-data-EdA/`)
+   - establish dataset scope, label balance, device coverage, and attack-family/subtype structure
+   - identify data quality issues such as duplicates in Dataset 2
+   - inspect skewed distributions and highly correlated features
+
+2. **Stage 2: final ML/DL pipeline** (`./`)
+   - turn those EDA findings into preprocessing decisions
+   - compare multiple models on binary and multiclass tasks
+   - analyze feature importance, latency, and device-wise benchmark behavior
+
+The connection between the two stages is intentional:
+- **class imbalance** motivated stratified sampling, class-aware metrics, and balanced binary models
+- **perfectly correlated features** motivated pruning 4 redundant columns
+- **highly skewed features** motivated a `log1p` transform before scaling
+- **Dataset 2 metadata** enabled attack-family, subtype, and exploratory per-device analyses
+
+For grading and presentation, the project should be read as:
+
+**EDA -> preprocessing rationale -> model comparison -> evaluation -> limitations**
 
 ## Problem Statement & Research Questions
 
@@ -278,6 +307,18 @@ Given the class imbalance, **DO NOT rely solely on accuracy**. Use:
 - **F1-Score:** Harmonic mean of precision and recall
 - **AUC-ROC:** Area under ROC curve
 - **Confusion Matrix:** Detailed breakdown of predictions
+
+## Benchmark Interpretation
+
+The reported results in this repository should be interpreted as **strong benchmark performance on sampled in-distribution splits of the BoTNeTIoT-L01 data**, not as proof of production-ready real-world deployment.
+
+Important caveats:
+- Dataset 2 contains duplicates, which can make random train/test splits look easier than a stricter evaluation
+- the current experiments use random stratified splits rather than temporal splits
+- train and test samples come from the same overall capture environment and the same set of devices
+- the per-device section is best treated as an **exploratory device-wise consistency check**, not a leave-one-device-out generalization claim
+
+These caveats do **not** invalidate the course project. They simply define the correct scope of the conclusions: the pipeline is reasonable and the benchmark results are informative, but the strongest claims should stay aligned with the evaluation setup.
 - **Cohen's Kappa:** Inter-rater agreement measure
 
 ### Baseline Models

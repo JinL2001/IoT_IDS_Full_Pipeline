@@ -34,7 +34,7 @@
 
   /* ── HEADER ── */
   .hero {
-    background: linear-gradient(135deg, #060b14 0%, #0b1628 60%, #081520 100%);
+    background: linear-gradient(135deg, #060b14 0%, #0b1628 60%, #081520 near-100%);
     border-bottom: 1px solid var(--border);
     padding: 64px 48px 48px;
     position: relative;
@@ -127,7 +127,7 @@
 
   /* ── TABLE ── */
   .table-wrap { overflow-x: auto; margin: 20px 0 32px; border-radius: 10px; border: 1px solid var(--border); }
-  table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 13px; }
+  table { width: near-100%; border-collapse: collapse; font-family: var(--mono); font-size: 13px; }
   thead tr { background: #0d1625; }
   thead th { padding: 12px 16px; text-align: left; color: var(--muted); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; border-bottom: 1px solid var(--border); font-weight: 400; }
   tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
@@ -150,7 +150,7 @@
   .bar-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
   .bar-label { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 220px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .bar-track { flex: 1; height: 10px; background: var(--border); border-radius: 99px; overflow: hidden; }
-  .bar-fill  { height: 100%; border-radius: 99px; transition: width .6s cubic-bezier(.4,0,.2,1); }
+  .bar-fill  { height: near-100%; border-radius: 99px; transition: width .6s cubic-bezier(.4,0,.2,1); }
   .bar-val   { font-family: var(--mono); font-size: 11px; color: var(--text); width: 52px; text-align: right; flex-shrink: 0; }
 
   /* ── CALLOUT ── */
@@ -312,7 +312,7 @@
   <!-- ── 2. EDA FINDINGS ── -->
   <section class="section">
     <div class="section-label">02 — Exploratory Data Analysis</div>
-    <h2>What the Data Looks Like</h2>
+    <h2>What the Data Looks Like and How It Informs the Pipeline</h2>
 
     <h3>Class Imbalance</h3>
     <p>Both datasets are heavily imbalanced toward attack traffic. Dataset 1 (cleaned) is roughly 79% attack vs 21% normal. Dataset 2 (full metadata) is even more skewed at 92% attack vs 8% normal. This is realistic — in a real network, botnet floods generate far more packets than benign use — but it means models need class weighting to avoid ignoring the minority "normal" class entirely.</p>
@@ -338,7 +338,7 @@
     <div class="section-label">03 — Binary Classification Results</div>
     <h2>Attack vs Normal — All 4 Models</h2>
 
-    <p>All four models were trained on 210K samples (70%) and evaluated on a held-out test set of 45K samples (15%). The results are exceptional across the board — all models achieve ≥0.999 F1-Macro — reflecting that IoT botnet traffic leaves very clear statistical fingerprints in the 19 engineered flow features.</p>
+    <p>All four models were trained on 210K samples (70%) and evaluated on a held-out test set of 45K samples (15%). The results are exceptionally strong on this benchmark sample — all models achieve ≥0.999 F1-Macro — reflecting that IoT botnet traffic leaves very clear statistical fingerprints in the 19 engineered flow features.</p>
 
     <div class="table-wrap">
       <table>
@@ -415,7 +415,7 @@
       </div>
       <div class="bar-row">
         <span class="bar-label">RF</span>
-        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--orange)"></div></div>
+        <div class="bar-track"><div class="bar-fill" style="width:near-100%;background:var(--orange)"></div></div>
         <span class="bar-val">45.43 μs</span>
       </div>
     </div>
@@ -429,7 +429,7 @@
     <h2>Attack Family & Subtype Identification</h2>
 
     <h3>3-Class: Normal vs Mirai vs Gafgyt</h3>
-    <p>The HGB model achieves <strong>perfect classification across all three families</strong> — F1 = 1.00 for Normal, gafgyt, and mirai on the 60K test set. This is a remarkable result: the two major botnet families leave completely non-overlapping signatures in the 19 flow statistics. A network IDS can not only detect an attack is happening, but immediately identify which botnet family is responsible.</p>
+    <p>The HGB model achieves <strong>near-perfect classification across all three families on this sampled benchmark</strong> — F1 = 1.00 for Normal, gafgyt, and mirai on the 60K test set. This is a remarkable result: the two major botnet families leave completely non-overlapping signatures in the 19 flow statistics. A network IDS can not only detect an attack is happening, but immediately identify which botnet family is responsible.</p>
 
     <h3>9-Class: Attack Subtypes (UDP, TCP, SYN, ACK, Combo, Junk, Scan, UDPPlain + Normal)</h3>
     <p>The 9-subtype classification is nearly perfect as well. Almost every subtype achieves F1 = 1.00, with one minor exception:</p>
@@ -439,7 +439,7 @@
       <strong>TCP subtype</strong> achieves precision = 0.99 (slightly below 1.00) while recall stays at 1.00. This means a tiny number of non-TCP flows are occasionally classified as TCP, but no actual TCP flows are missed. This is the only non-perfect metric in the entire multiclass evaluation.
     </div>
 
-    <p>Overall 9-class accuracy on the test set is <strong>100%</strong> — the model perfectly separates all 9 attack subtypes plus normal traffic.</p>
+    <p>Overall 9-class accuracy on the sampled test set is <strong>near-100%</strong> — the model perfectly separates all 9 attack subtypes plus normal traffic.</p>
   </section>
 
   <!-- ── 5. FEATURE IMPORTANCE ── -->
@@ -453,7 +453,7 @@
     <div class="bar-section">
       <div class="bar-row">
         <span class="bar-label">MI_dir_L0.1_weight</span>
-        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--accent)"></div></div>
+        <div class="bar-track"><div class="bar-fill" style="width:near-100%;background:var(--accent)"></div></div>
         <span class="bar-val">32.1%</span>
       </div>
       <div class="bar-row">
@@ -490,7 +490,7 @@
 
     <div class="callout good">
       <div class="callout-title">Surprising Result — Top 10 Beats Full Feature Set</div>
-      Training MLP on only the top 10 permutation-important features achieved <strong>F1-Macro = 0.9995</strong>, vs 0.9993 with all 19 features. The extra 9 features add noise, not signal. A real-time IDS could safely use just 10 features, cutting computation by ~47%.
+      In an exploratory follow-up, training MLP on only the top 10 permutation-important features achieved <strong>F1-Macro = 0.9995</strong>, vs 0.9993 with all 19 features. The extra 9 features add noise, not signal. A real-time IDS could safely use just 10 features, cutting computation by ~47%.
     </div>
   </section>
 
@@ -499,7 +499,7 @@
     <div class="section-label">06 — Per-Device Evaluation</div>
     <h2>Does the Global Model Work on Every Device?</h2>
 
-    <p>A single global HGB model was evaluated separately against all 9 IoT devices — ranging from baby monitors to security cameras and smart thermostats. The results show that the model generalizes <strong>perfectly or near-perfectly across all device types</strong>:</p>
+    <p>A single global HGB model was also inspected separately across all 9 IoT devices — ranging from baby monitors to security cameras and smart thermostats. The results show that the model generalizes <strong>very consistently across the sampled device subsets</strong>:</p>
 
     <div class="table-wrap">
       <table>
@@ -520,7 +520,7 @@
       </table>
     </div>
 
-    <p>7 of 9 devices achieve <strong>perfect F1 = 1.000</strong>. The Philips Baby Monitor is the lowest performer with F1-Normal = 0.9990 — still outstanding, and likely due to that device generating more varied benign traffic patterns than security cameras, which are simpler network clients.</p>
+    <p>Most devices achieve <strong>F1 values at or extremely close to 1.000</strong>. The Philips Baby Monitor is the lowest performer with F1-Normal = 0.9990 — still outstanding, and likely due to that device generating more varied benign traffic patterns than security cameras, which are simpler network clients.</p>
   </section>
 
   <!-- ── 7. PROJECT GOALS ── -->
@@ -547,12 +547,12 @@
       <div class="goal-card met">
         <div class="goal-status">✅ FULLY MET</div>
         <div class="goal-title">Feature Importance</div>
-        <div class="goal-body">MI_dir_L0.1_weight dominates at 32% RF importance. Top 10 features actually outperform all 19 (F1 0.9995 vs 0.9993), confirming 4 redundant features were correctly pruned.</div>
+        <div class="goal-body">MI_dir_L0.1_weight dominates at 32% RF importance. Top 10 features retain comparable performance in an exploratory comparison (F1 0.9995 vs 0.9993), confirming 4 redundant features were correctly pruned.</div>
       </div>
       <div class="goal-card met">
         <div class="goal-status">✅ FULLY MET</div>
         <div class="goal-title">Device Generalization</div>
-        <div class="goal-body">A single global model scores F1 ≥ 0.999 on all 9 IoT device types. No device-specific models are needed — botnet signatures are universal across device categories.</div>
+        <div class="goal-body">A single global model shows very strong device-wise benchmark performance across all 9 IoT device types. This should be treated as an exploratory consistency check rather than a strict unseen-device generalization result.</div>
       </div>
       <div class="goal-card warn">
         <div class="goal-status">⚠️ PARTIALLY MET</div>
