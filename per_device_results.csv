@@ -1,0 +1,5 @@
+device,f1_attack,f1_normal,n_samples
+Google_Home,0.8257,0.0,12380
+Samsung_Fridge,0.8236,0.0,12637
+Amazon_Echo,0.8235,0.0,12447
+Philips_Hue,0.8187,0.0,12536

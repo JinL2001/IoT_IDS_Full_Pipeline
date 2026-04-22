@@ -1,0 +1,5 @@
+model,stage,f1_attack_0,f1_normal_1,f1_macro,auc_roc,latency_us,train_time_s
+LogReg,Stage1_Binary,0.9998,0.9991,0.9994,1.0,0.073,0.3
+RF,Stage1_Binary,1.0,0.9999,0.9999,1.0,25.597,2.4
+HGB,Stage1_Binary,1.0,0.9999,0.9999,1.0,1.822,2.6
+MLP,Stage1_Binary,0.9999,0.9997,0.9998,1.0,1.113,15.4
